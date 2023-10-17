@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
+import MainNav from "@/components/navigation/main-nav";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -35,7 +36,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <div className="flex flex-col min-h-screen">
+            <MainNav />
+
+            <main className="flex-1">{children}</main>
+          </div>
         </ThemeProvider>
       </body>
     </html>
