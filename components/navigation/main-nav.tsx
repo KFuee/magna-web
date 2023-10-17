@@ -2,26 +2,35 @@ import Image from "next/image";
 import { UserNav } from "@/components/navigation/user-nav";
 import { NavItems } from "./nav-items";
 import { ModeToggle } from "./mode-toggle";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { Database } from "@/lib/types/database";
+import { cookies } from "next/headers";
 
-export default function MainNav() {
+export default async function MainNav() {
+  const supabase = createServerComponentClient<Database>({ cookies });
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
   return (
-    <div className="flex h-16 items-center px-4 border-b">
+    <div className="flex h-16 items-center px-6 border-b">
       <div className="flex items-center text-lg font-medium">
         <Image
           src="/logo.svg"
           alt="Magna Logo"
-          className="dark:invert"
+          className="dark:invert me-4"
           width={100}
           height={24}
           priority
         />
 
-        <NavItems className="mx-4" />
+        <NavItems />
       </div>
 
       <div className="ml-auto flex items-center space-x-4">
         <ModeToggle />
-        <UserNav />
+        <UserNav session={session} />
       </div>
     </div>
   );
