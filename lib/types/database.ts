@@ -34,7 +34,27 @@ export interface Database {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      Products: {
+        Row: {
+          code: string
+          created_at: string
+          description: string
+          id: number
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          description: string
+          id?: number
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          description?: string
+          id?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
