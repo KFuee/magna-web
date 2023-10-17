@@ -36,29 +36,33 @@ export const productsColumnDef: ColumnDef<Tables<"Products">>[] = [
     accessorKey: "code",
     header: ({ column }) => {
       return (
-        <Button
-          variant="ghost"
+        <div
+          className="flex items-center space-x-2 cursor-pointer w-fit"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Código
+          <span>Código</span>
           <ChevronsUpDownIcon className="ml-2 h-4 w-4" />
-        </Button>
+        </div>
       );
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("code")}</div>,
+    cell: ({ row }) => (
+      <div className="lowercase whitespace-nowrap">{row.getValue("code")}</div>
+    ),
   },
   {
     accessorKey: "description",
     header: "Descripción",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("description")}</div>
+      <div className="capitalize whitespace-nowrap">
+        {row.getValue("description")}
+      </div>
     ),
   },
   {
     accessorKey: "created_at",
     header: "Fecha de creación",
     cell: ({ row }) => (
-      <div className="capitalize">
+      <div className="capitalize whitespace-nowrap">
         {new Date(row.getValue("created_at")).toLocaleDateString("es-ES", {
           weekday: "long",
           year: "numeric",
