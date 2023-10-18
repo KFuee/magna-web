@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Row,
   RowSelectionState,
   SortingState,
   VisibilityState,
@@ -16,8 +17,14 @@ import { useState } from "react";
 import DataTable from "@/components/data-table";
 import { fuzzyFilter } from "@/lib/utils";
 import { productsColumnDef } from "./column-def";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { Database } from "@/lib/types/database";
+import { useRouter } from "next/navigation";
 
 export function ProductsTable({ data }: { data: Tables<"Products">[] }) {
+  const router = useRouter();
+  const supabase = createClientComponentClient<Database>();
+
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -41,6 +48,21 @@ export function ProductsTable({ data }: { data: Tables<"Products">[] }) {
       globalFilter,
     },
     globalFilterFn: fuzzyFilter,
+    meta: {
+      deleteRow: async (row: Row<Tables<"Products">>) => {
+        const { error } = await supabase
+          .from("Products")
+          .delete()
+          .eq("id", row.original.id);
+
+        if (error) {
+          console.error(error);
+          return;
+        }
+
+        router.refresh();
+      },
+    },
   });
 
   return (
