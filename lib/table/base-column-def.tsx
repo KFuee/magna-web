@@ -29,9 +29,9 @@ export const createBaseColumnDef = <T,>(
     ...customDef,
     {
       accessorKey: "created_at",
-      header: "Fecha de creación",
+      header: () => {},
       cell: ({ row }) => (
-        <div className="capitalize whitespace-nowrap">
+        <div className="flex items-center justify-end space-x-2 capitalize whitespace-nowrap">
           {getDateString(row.getValue("created_at"))}
         </div>
       ),
