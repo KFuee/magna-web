@@ -1,4 +1,4 @@
-import { createBaseColumnDef } from "@/lib/base-column-def";
+import { createBaseColumnDef } from "@/lib/table/base-column-def";
 import { Tables } from "@/lib/types/database-custom";
 import { ColumnDef } from "@tanstack/react-table";
 import { ChevronsUpDownIcon } from "lucide-react";
