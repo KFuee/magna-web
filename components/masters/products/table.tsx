@@ -49,6 +49,7 @@ export function ProductsTable({ data }: { data: Tables<"Products">[] }) {
     },
     globalFilterFn: fuzzyFilter,
     meta: {
+      updateRow: async (row: Row<Tables<"Products">>) => {},
       deleteRow: async (row: Row<Tables<"Products">>) => {
         const { error } = await supabase
           .from("Products")
