@@ -2,12 +2,10 @@ import Image from "next/image";
 import { UserNav } from "@/components/navigation/user-nav";
 import { NavItems } from "./nav-items";
 import { ModeToggle } from "./mode-toggle";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { Database } from "@/lib/types/database";
-import { cookies } from "next/headers";
+import supabaseServer from "@/lib/supabaseServer";
 
 export default async function MainNav() {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const supabase = supabaseServer();
 
   const {
     data: { session },

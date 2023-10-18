@@ -1,13 +1,11 @@
 import { CreateLocationDialog } from "@/components/masters/locations/create-dialog";
 import { LocationsTable } from "@/components/masters/locations/table";
 import { Button } from "@/components/ui/button";
-import { Database } from "@/lib/types/database";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import supabaseServer from "@/lib/supabaseServer";
 import { ImportIcon } from "lucide-react";
-import { cookies } from "next/headers";
 
 export default async function LocationsPage() {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const supabase = supabaseServer();
 
   const { data, error } = await supabase.from("Locations").select("*");
 

@@ -1,13 +1,11 @@
 import { CreateProductDialog } from "@/components/masters/products/create-dialog";
 import { ProductsTable } from "@/components/masters/products/table";
 import { Button } from "@/components/ui/button";
-import { Database } from "@/lib/types/database";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import supabaseServer from "@/lib/supabaseServer";
 import { ImportIcon } from "lucide-react";
-import { cookies } from "next/headers";
 
 export default async function ProductsPage() {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const supabase = supabaseServer();
 
   const { data, error } = await supabase.from("Products").select("*");
 
