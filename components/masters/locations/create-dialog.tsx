@@ -55,6 +55,7 @@ export function CreateLocationDialog() {
     ]);
 
     setIsLoading(false);
+    setOpen(false);
 
     form.reset();
     router.refresh();
