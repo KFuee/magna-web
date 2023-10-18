@@ -10,7 +10,7 @@ import {
 
 import {
   RowSelectionState,
-  Table as TansTable,
+  Table as TanStackTable,
   flexRender,
 } from "@tanstack/react-table";
 import {
@@ -18,10 +18,10 @@ import {
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "../ui/dropdown-menu";
 import { ChevronDownIcon, TrashIcon } from "lucide-react";
-import { Button } from "./ui/button";
-import { productsColumnDef } from "./masters/products/column-def";
+import { Button } from "../ui/button";
+import { productsColumnDef } from "../masters/products/column-def";
 
 export default function DataTable<T>({
   table,
@@ -29,7 +29,7 @@ export default function DataTable<T>({
   globalFilter,
   setGlobalFilter,
 }: {
-  table: TansTable<T>;
+  table: TanStackTable<T>;
   rowSelection: RowSelectionState;
   globalFilter: string;
   setGlobalFilter: (value: string) => void;

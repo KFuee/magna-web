@@ -58,9 +58,8 @@ export function CreateProductDialog() {
     ]);
 
     setIsLoading(false);
-    setOpen(false);
-    form.reset();
 
+    form.reset();
     router.refresh();
   }
 
@@ -136,11 +135,9 @@ export function CreateProductDialog() {
                   onClick={form.handleSubmit(onSubmit)}
                   disabled={isLoading}
                 >
-                  {isLoading ? (
-                    <span>Creando producto...</span>
-                  ) : (
-                    <span>Crear producto</span>
-                  )}
+                  <span>
+                    {isLoading ? "Creando producto..." : "Crear producto"}
+                  </span>
                 </Button>
               </DialogFooter>
             </div>
