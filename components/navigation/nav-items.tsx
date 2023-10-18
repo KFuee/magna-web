@@ -28,9 +28,9 @@ const components: { title: string; href: string; description: string }[] = [
   },
 ];
 
-export function NavItems(className: { className?: string }) {
+export function NavItems({ className }: { className: string }) {
   return (
-    <NavigationMenu>
+    <NavigationMenu className={cn(className)}>
       <NavigationMenuList>
         <NavigationMenuItem>
           <Link href="/" legacyBehavior passHref>

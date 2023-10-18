@@ -23,7 +23,7 @@ export default async function MainNav() {
           priority
         />
 
-        <NavItems />
+        <NavItems className="hidden sm:block" />
       </div>
 
       <div className="ml-auto flex items-center space-x-4">
