@@ -34,6 +34,24 @@ export interface Database {
   }
   public: {
     Tables: {
+      Locations: {
+        Row: {
+          created_at: string
+          id: number
+          storage_bin: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          storage_bin: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          storage_bin?: string
+        }
+        Relationships: []
+      }
       Products: {
         Row: {
           code: string
