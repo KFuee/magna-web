@@ -26,15 +26,14 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 const formSchema = z.object({
-  code: z.string().min(1, "El código es requerido"),
-  description: z.string().min(1, "La descripción es requerida"),
+  storage_bin: z.string().min(1, "El código de contenedor es requerido"),
 });
 
-export function UpdateProductDialog({
+export function UpdateLocationDialog({
   current,
   setUpdateOpened,
 }: {
-  current: Tables<"Products">;
+  current: Tables<"Locations">;
   setUpdateOpened: (value: boolean) => void;
 }) {
   const router = useRouter();
@@ -45,8 +44,7 @@ export function UpdateProductDialog({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      code: "",
-      description: "",
+      storage_bin: "",
     },
   });
 
@@ -54,10 +52,9 @@ export function UpdateProductDialog({
     setIsLoading(true);
 
     await supabase
-      .from("Products")
+      .from("Locations")
       .update({
-        code: values.code,
-        description: values.description,
+        storage_bin: values.storage_bin,
       })
       .eq("id", current.id);
 
@@ -70,17 +67,16 @@ export function UpdateProductDialog({
 
   useEffect(() => {
     form.reset({
-      code: current.code,
-      description: current.description,
+      storage_bin: current.storage_bin,
     });
   }, [current, form]);
 
   return (
     <DialogContent className="sm:max-w-[425px]">
       <DialogHeader>
-        <DialogTitle>Actualizar producto</DialogTitle>
+        <DialogTitle>Actualizar ubicación</DialogTitle>
         <DialogDescription>
-          Formulario actualización de producto.
+          Formulario actualización de ubicación.
         </DialogDescription>
       </DialogHeader>
       <Form {...form}>
@@ -88,31 +84,13 @@ export function UpdateProductDialog({
           <div className="flex flex-col gap-y-4">
             <FormField
               control={form.control}
-              name="code"
+              name="storage_bin"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
                     <Input
                       {...field}
-                      placeholder="Código"
-                      type="text"
-                      disabled={isLoading}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="Descripción"
+                      placeholder="Código de contenedor"
                       type="text"
                       disabled={isLoading}
                     />
@@ -141,7 +119,7 @@ export function UpdateProductDialog({
               >
                 <span>
                   {isLoading
-                    ? "Actualizado producto..."
+                    ? "Actualizando producto..."
                     : "Actualizar producto"}
                 </span>
               </Button>

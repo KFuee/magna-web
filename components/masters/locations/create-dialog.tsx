@@ -28,11 +28,10 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 const formSchema = z.object({
-  code: z.string().min(1, "El código es requerido"),
-  description: z.string().min(1, "La descripción es requerida"),
+  storage_bin: z.string().min(1, "El código de contenedor es requerido"),
 });
 
-export function CreateProductDialog() {
+export function CreateLocationDialog() {
   const router = useRouter();
   const supabase = createClientComponentClient<Database>();
 
@@ -42,18 +41,16 @@ export function CreateProductDialog() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      code: "",
-      description: "",
+      storage_bin: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
 
-    await supabase.from("Products").insert([
+    await supabase.from("Locations").insert([
       {
-        code: values.code,
-        description: values.description,
+        storage_bin: values.storage_bin,
       },
     ]);
 
@@ -68,15 +65,15 @@ export function CreateProductDialog() {
       <DialogTrigger asChild>
         <Button variant="default">
           <PlusIcon className="w-5 h-5 mr-2" />
-          <span>Crear producto</span>
+          <span>Crear ubicación</span>
         </Button>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Crear producto</DialogTitle>
+          <DialogTitle>Crear ubicación</DialogTitle>
           <DialogDescription>
-            Formulario creación de producto.
+            Formulario creación de ubicación.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -84,31 +81,13 @@ export function CreateProductDialog() {
             <div className="flex flex-col gap-y-4">
               <FormField
                 control={form.control}
-                name="code"
+                name="storage_bin"
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
                       <Input
                         {...field}
-                        placeholder="Código"
-                        type="text"
-                        disabled={isLoading}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="description"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="Descripción"
+                        placeholder="Código de contenedor"
                         type="text"
                         disabled={isLoading}
                       />
@@ -136,7 +115,7 @@ export function CreateProductDialog() {
                   disabled={isLoading}
                 >
                   <span>
-                    {isLoading ? "Creando producto..." : "Crear producto"}
+                    {isLoading ? "Creando ubicación..." : "Crear ubicación"}
                   </span>
                 </Button>
               </DialogFooter>

@@ -20,8 +20,11 @@ import {
 } from "../ui/form";
 
 const formSchema = z.object({
-  email: z.string().email().min(1),
-  password: z.string().min(1),
+  email: z
+    .string()
+    .email("El email introducido no es válido")
+    .min(1, "El email es requerido"),
+  password: z.string().min(1, "La contraseña es requerida"),
 });
 
 interface SignInFormProps extends React.HTMLAttributes<HTMLDivElement> {}
