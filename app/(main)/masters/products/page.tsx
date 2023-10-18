@@ -16,12 +16,12 @@ export default async function ProductsPage() {
 
   return (
     <div className="flex flex-1 flex-col p-6 min-h-full space-y-4">
-      <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-bold tracking-tight">Productos</h2>
-        <div className="flex items-start space-x-2 mt-0">
+      <div className="flex items-center justify-between flex-wrap gap-4">
+        <h2 className="text-3xl font-bold tracking-tight flex-1">Productos</h2>
+        <div className="flex items-center justify-end space-x-2 mt-0 flex-1">
           <CreateProductDialog />
 
-          <Button variant="default">
+          <Button variant="default" className="flex-1 sm:flex-grow-0">
             <ImportIcon className="w-5 h-5 mr-2" />
             <span>Importar</span>
           </Button>

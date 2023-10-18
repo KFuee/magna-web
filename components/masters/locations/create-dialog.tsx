@@ -64,7 +64,10 @@ export function CreateLocationDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="default">
+        <Button
+          variant="default"
+          className="whitespace-nowrap flex-1 sm:flex-grow-0"
+        >
           <PlusIcon className="w-5 h-5 mr-2" />
           <span>Crear ubicación</span>
         </Button>

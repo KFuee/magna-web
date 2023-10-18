@@ -9,7 +9,7 @@ const customDef: ColumnDef<Tables<"Locations">>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center space-x-2 cursor-pointer w-fit"
+          className="flex items-center space-x-2 cursor-pointer w-fit whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           <span>Código de contenedor</span>
