@@ -34,6 +34,79 @@ export interface Database {
   }
   public: {
     Tables: {
+      Inventories: {
+        Row: {
+          closed_at: string | null
+          created_at: string
+          id: number
+          name: string
+        }
+        Insert: {
+          closed_at?: string | null
+          created_at?: string
+          id?: number
+          name: string
+        }
+        Update: {
+          closed_at?: string | null
+          created_at?: string
+          id?: number
+          name?: string
+        }
+        Relationships: []
+      }
+      InventoryItems: {
+        Row: {
+          barcode: string | null
+          created_at: string
+          id: number
+          inventory_id: number
+          location_id: number
+          observations: string | null
+          product_id: number
+          quantity: number
+        }
+        Insert: {
+          barcode?: string | null
+          created_at?: string
+          id?: number
+          inventory_id: number
+          location_id: number
+          observations?: string | null
+          product_id: number
+          quantity: number
+        }
+        Update: {
+          barcode?: string | null
+          created_at?: string
+          id?: number
+          inventory_id?: number
+          location_id?: number
+          observations?: string | null
+          product_id?: number
+          quantity?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "InventoryItems_inventory_id_fkey"
+            columns: ["inventory_id"]
+            referencedRelation: "Inventories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "InventoryItems_location_id_fkey"
+            columns: ["location_id"]
+            referencedRelation: "Locations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "InventoryItems_product_id_fkey"
+            columns: ["product_id"]
+            referencedRelation: "Products"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       Locations: {
         Row: {
           created_at: string
