@@ -21,7 +21,6 @@ import {
 } from "../ui/dropdown-menu";
 import { ChevronDownIcon, TrashIcon } from "lucide-react";
 import { Button } from "../ui/button";
-import { productsColumnDef } from "../masters/products/column-def";
 
 export default function DataTable<T>({
   table,
@@ -122,7 +121,7 @@ export default function DataTable<T>({
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={productsColumnDef.length}
+                  colSpan={table.getAllColumns().length}
                   className="h-24 text-center"
                 >
                   No se encontraron resultados.
