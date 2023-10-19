@@ -33,7 +33,7 @@ export function NavItems({ className }: { className: string }) {
     <NavigationMenu className={cn(className)}>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <Link href="/" legacyBehavior passHref>
+          <Link href="/inventories" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               Inventarios
             </NavigationMenuLink>

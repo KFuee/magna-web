@@ -16,7 +16,7 @@ import { forwardRef } from "react";
 const components: { title: string; href: string }[] = [
   {
     title: "Inventarios",
-    href: "/",
+    href: "/inventories",
   },
   {
     title: "Productos",
