@@ -386,7 +386,7 @@ export function UpdateInventoryDialog({
 
             <FormField
               control={form.control}
-              name="barcode"
+              name="observations"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
                   <FormControl>

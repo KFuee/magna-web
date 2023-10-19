@@ -21,6 +21,8 @@ import {
 } from "../ui/dropdown-menu";
 import { ChevronDownIcon, TrashIcon } from "lucide-react";
 import { Button } from "../ui/button";
+import { useCallback, useEffect } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function DataTable<T>({
   table,
@@ -33,13 +35,57 @@ export default function DataTable<T>({
   globalFilter: string;
   setGlobalFilter: (value: string) => void;
 }) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  // Obtiene una nueva cadena de búsqueda combinando la actual
+  // searchParams con un par clave/valor proporcionado
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams);
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams]
+  );
+
+  const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+
+    setGlobalFilter(value);
+
+    // Actualiza la cadena de consulta con el nuevo valor
+    const queryString = createQueryString("filter", value);
+
+    if (!value) {
+      router.push(pathname);
+      return;
+    }
+
+    router.push(`${pathname}?${queryString}`);
+  };
+
+  // Establece en la primera carga el valor de búsqueda global
+  useEffect(() => {
+    const filter = searchParams.get("filter");
+
+    if (!filter) {
+      return;
+    }
+
+    setGlobalFilter(filter);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="w-full">
       <div className="flex flex-row items-center flex-wrap py-4 gap-2">
         <Input
           placeholder="Filtrado por columna(s)..."
           value={globalFilter ?? ""}
-          onChange={(value) => setGlobalFilter(String(value.target.value))}
+          onChange={(event) => handleFilterChange(event)}
           className="lg:max-w-lg w-full"
         />
 
