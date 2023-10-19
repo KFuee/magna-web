@@ -30,7 +30,7 @@ export default async function InventoryItemsPage({
 
   return (
     <div className="flex flex-1 flex-col p-6 min-h-full space-y-4">
-      <div className="flex items-center justify-between flex-wrap gap-4 h-[40px]">
+      <div className="flex items-center justify-between flex-wrap gap-4 min-h-[40px]">
         <h2 className="text-3xl font-bold tracking-tight flex-1">
           Inventario {data?.name}
         </h2>

@@ -12,6 +12,7 @@ import { UserNav } from "./user-nav";
 import { Session } from "@supabase/auth-helpers-nextjs";
 import { Separator } from "../ui/separator";
 import { forwardRef } from "react";
+import Link from "next/link";
 
 const components: { title: string; href: string }[] = [
   {
@@ -73,12 +74,12 @@ export function MobileNav({ session }: { session: Session | null }) {
 }
 
 const ListItem = forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
+  React.ElementRef<typeof Link>,
+  React.ComponentPropsWithoutRef<typeof Link>
 >(({ className, title, ...props }, ref) => {
   return (
     <li>
-      <a
+      <Link
         ref={ref}
         className={cn(
           "flex w-full font-medium leading-none rounded-md",
@@ -87,7 +88,7 @@ const ListItem = forwardRef<
         {...props}
       >
         <div className="text-xl font-medium leading-none">{title}</div>
-      </a>
+      </Link>
     </li>
   );
 });
