@@ -18,7 +18,7 @@ export default function SignInPage() {
             <Image
               src="/logo.svg"
               alt="Magna Logo"
-              className="dark:invert"
+              className="invert"
               width={100}
               height={24}
               priority

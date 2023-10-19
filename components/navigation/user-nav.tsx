@@ -45,7 +45,7 @@ export function UserNav({ session }: { session: Session | null }) {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={handleSignOut}>
+        <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer">
           Cerrar sesión
         </DropdownMenuItem>
       </DropdownMenuContent>
