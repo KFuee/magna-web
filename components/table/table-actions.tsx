@@ -42,12 +42,12 @@ export default function TableActions({
 
               <DropdownMenuSeparator />
               <DropdownMenuItem>
-                <DialogTrigger asChild className="w-full">
+                <DialogTrigger asChild className="w-full cursor-pointer">
                   <span>Editar</span>
                 </DialogTrigger>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <AlertDialogTrigger asChild className="w-full">
+                <AlertDialogTrigger asChild className="w-full cursor-pointer">
                   <span>Eliminar</span>
                 </AlertDialogTrigger>
               </DropdownMenuItem>
