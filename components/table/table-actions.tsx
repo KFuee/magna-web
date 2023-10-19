@@ -36,6 +36,10 @@ export default function TableActions({
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Acciones</DropdownMenuLabel>
+              {table.options.meta?.aditionalActions
+                ? table.options.meta?.aditionalActions?.(row)
+                : null}
+
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <DialogTrigger asChild className="w-full">

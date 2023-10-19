@@ -8,6 +8,7 @@ import { Database } from "@/lib/types/database";
 import { useRouter } from "next/navigation";
 import { useTableDefinition } from "@/lib/table/use-table-definition";
 import { UpdateInventoryDialog } from "./update-dialog";
+import InventoriesAditionalActions from "./aditional-actions";
 
 export function InventoriesTable({ data }: { data: Tables<"Inventories">[] }) {
   const router = useRouter();
@@ -18,6 +19,7 @@ export function InventoriesTable({ data }: { data: Tables<"Inventories">[] }) {
       data,
       columns: inventoriesColumnDef,
       meta: {
+        aditionalActions: (row) => <InventoriesAditionalActions row={row} />,
         updateComponent: (row, setUpdateOpened) => (
           <UpdateInventoryDialog
             current={row.original}

@@ -38,6 +38,7 @@ export const createBaseColumnDef = <T,>(
     },
     {
       id: "actions",
+      enableSorting: false,
       enableHiding: false,
       cell: ({ row, table }) => {
         return <TableActions row={row} table={table} />;
