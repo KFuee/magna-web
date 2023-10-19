@@ -3,6 +3,7 @@ import { UserNav } from "@/components/navigation/user-nav";
 import { NavItems } from "./nav-items";
 import { ModeToggle } from "./mode-toggle";
 import supabaseServer from "@/lib/supabaseServer";
+import { MobileNav } from "./mobile-nav";
 
 export default async function MainNav() {
   const supabase = supabaseServer();
@@ -26,9 +27,13 @@ export default async function MainNav() {
         <NavItems className="hidden sm:block" />
       </div>
 
-      <div className="ml-auto flex items-center space-x-4">
+      <div className="ml-auto items-center space-x-4 hidden sm:flex">
         <ModeToggle />
         <UserNav session={session} />
+      </div>
+
+      <div className="ml-auto items-center space-x-4 flex sm:hidden">
+        <MobileNav session={session} />
       </div>
     </div>
   );
