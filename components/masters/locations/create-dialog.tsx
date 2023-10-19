@@ -101,7 +101,7 @@ export function CreateLocationDialog() {
                 )}
               />
 
-              <DialogFooter>
+              <DialogFooter className="gap-y-2">
                 <Button
                   variant="secondary"
                   onClick={(event) => {
