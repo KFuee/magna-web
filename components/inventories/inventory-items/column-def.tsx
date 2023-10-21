@@ -5,13 +5,25 @@ import { ColumnDef } from "@tanstack/react-table";
 const customDef: ColumnDef<InventoryItem>[] = [
   {
     accessorKey: "barcode",
-    header: "Código de barras",
+    header: () => {
+      return (
+        <div className="flex items-center whitespace-nowrap">
+          <span>Código de barras</span>
+        </div>
+      );
+    },
     cell: ({ row }) => <div>{row.getValue("barcode") || "-"}</div>,
   },
   {
     accessorKey: "Locations",
     accessorFn: (row) => row.Locations?.storage_bin,
-    header: "Código de contenedor",
+    header: () => {
+      return (
+        <div className="flex items-center whitespace-nowrap">
+          <span>Código de contenedor</span>
+        </div>
+      );
+    },
     cell: ({ row }) => <div>{row.getValue("Locations") || "-"}</div>,
   },
   {
