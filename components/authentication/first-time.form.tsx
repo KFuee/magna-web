@@ -19,12 +19,22 @@ import {
   FormMessage,
 } from "../ui/form";
 
-const formSchema = z.object({
-  password: z.string().min(6, "La contraseña es requerida"),
-  confirm_password: z
-    .string()
-    .min(6, "La confirmación de contraseña es requerida"),
-});
+const formSchema = z
+  .object({
+    password: z
+      .string()
+      .min(6, "La contraseña debe tener al menos 6 caracteres"),
+    confirm_password: z
+      .string()
+      .min(
+        6,
+        "La confirmación de la contraseña debe tener al menos 6 caracteres"
+      ),
+  })
+  .refine((data) => data.password === data.confirm_password, {
+    message: "Las contraseñas no coinciden",
+    path: ["confirm_password"],
+  });
 
 interface FirstTimeFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
