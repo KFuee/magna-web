@@ -20,10 +20,10 @@ import {
 } from "../ui/form";
 
 const formSchema = z.object({
-  password: z.string().min(1, "La contraseña es requerida"),
+  password: z.string().min(6, "La contraseña es requerida"),
   confirm_password: z
     .string()
-    .min(1, "La confirmación de contraseña es requerida"),
+    .min(6, "La confirmación de contraseña es requerida"),
 });
 
 interface FirstTimeFormProps extends React.HTMLAttributes<HTMLDivElement> {}
@@ -53,6 +53,7 @@ export function FirstTimeForm({ className, ...props }: FirstTimeFormProps) {
 
     if (error) {
       setError(error.message);
+      return;
     }
 
     setIsLoading(false);
@@ -114,7 +115,7 @@ export function FirstTimeForm({ className, ...props }: FirstTimeFormProps) {
               )}
             </Button>
 
-            {error && <p className="text-red-500">{error}</p>}
+            {error && <p className="text-red-500 text-center">{error}</p>}
           </div>
         </form>
       </Form>

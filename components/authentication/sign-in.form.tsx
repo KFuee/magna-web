@@ -55,6 +55,7 @@ export function SignInForm({ className, ...props }: SignInFormProps) {
 
     if (error) {
       setError(error.message);
+      return;
     }
 
     setIsLoading(false);
@@ -115,7 +116,7 @@ export function SignInForm({ className, ...props }: SignInFormProps) {
               )}
             </Button>
 
-            {error && <p className="text-red-500">{error}</p>}
+            {error && <p className="text-red-500 text-center">{error}</p>}
           </div>
         </form>
       </Form>
