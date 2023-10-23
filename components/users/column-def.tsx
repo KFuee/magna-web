@@ -27,9 +27,15 @@ const customDef: ColumnDef<User>[] = [
   },
   {
     accessorKey: "last_sign_in_at",
-    header: "Último inicio de sesión",
+    header: () => {
+      return (
+        <div className="flex items-center whitespace-nowrap">
+          <span>Último inicio de sesión</span>
+        </div>
+      );
+    },
     cell: ({ row }) => (
-      <div>{getDateString(row.getValue("last_sign_in_at"))}</div>
+      <div className="">{getDateString(row.getValue("last_sign_in_at"))}</div>
     ),
     enableColumnFilter: false,
   },
