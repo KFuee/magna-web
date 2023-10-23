@@ -25,7 +25,7 @@ export default function InventoriesAditionalActions({
       .eq("id", row.original.id);
 
     if (error) {
-      console.error(error);
+      throw error;
     }
 
     router.refresh();

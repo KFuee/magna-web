@@ -1,7 +1,7 @@
 import { CreateProductDialog } from "@/components/masters/products/create-dialog";
 import { ProductsTable } from "@/components/masters/products/table";
 import { Button } from "@/components/ui/button";
-import supabaseServer from "@/lib/supabaseServer";
+import { supabaseServer } from "@/lib/supabaseServer";
 import { ImportIcon } from "lucide-react";
 
 export default async function ProductsPage() {
@@ -10,8 +10,7 @@ export default async function ProductsPage() {
   const { data, error } = await supabase.from("Products").select("*");
 
   if (error) {
-    console.error(error);
-    return <div>Error</div>;
+    throw error;
   }
 
   return (

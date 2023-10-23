@@ -1,5 +1,5 @@
 import { InventoryItemsTable } from "@/components/inventories/inventory-items/table";
-import supabaseServer from "@/lib/supabaseServer";
+import { supabaseServer } from "@/lib/supabaseServer";
 
 export default async function InventoryItemsPage({
   params,
@@ -24,8 +24,7 @@ export default async function InventoryItemsPage({
     .single();
 
   if (error) {
-    console.log(error);
-    return <div>Error</div>;
+    throw error;
   }
 
   return (

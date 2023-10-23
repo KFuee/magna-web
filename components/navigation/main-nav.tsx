@@ -2,7 +2,7 @@ import Image from "next/image";
 import { UserNav } from "@/components/navigation/user-nav";
 import { NavItems } from "./nav-items";
 import { ModeToggle } from "./mode-toggle";
-import supabaseServer from "@/lib/supabaseServer";
+import { supabaseServer } from "@/lib/supabaseServer";
 import { MobileNav } from "./mobile-nav";
 
 export default async function MainNav() {

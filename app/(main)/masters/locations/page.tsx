@@ -1,7 +1,7 @@
 import { CreateLocationDialog } from "@/components/masters/locations/create-dialog";
 import { LocationsTable } from "@/components/masters/locations/table";
 import { Button } from "@/components/ui/button";
-import supabaseServer from "@/lib/supabaseServer";
+import { supabaseServer } from "@/lib/supabaseServer";
 import { ImportIcon } from "lucide-react";
 
 export default async function LocationsPage() {
@@ -10,8 +10,7 @@ export default async function LocationsPage() {
   const { data, error } = await supabase.from("Locations").select("*");
 
   if (error) {
-    console.error(error);
-    return <div>Error</div>;
+    throw error;
   }
 
   return (

@@ -21,6 +21,7 @@ export const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
 };
 
 export const getDateString = (date: Date) => {
+  if (!date || date === null) return "-";
   return new Date(date).toLocaleDateString("es-ES", {
     year: "numeric",
     month: "long",

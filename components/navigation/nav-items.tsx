@@ -58,7 +58,7 @@ export function NavItems({ className }: { className: string }) {
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link href="/" legacyBehavior passHref>
+          <Link href="/users" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               Usuarios
             </NavigationMenuLink>

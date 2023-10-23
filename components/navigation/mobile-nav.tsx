@@ -29,7 +29,7 @@ const components: { title: string; href: string }[] = [
   },
   {
     title: "Usuarios",
-    href: "/masters/users",
+    href: "/users",
   },
 ];
 

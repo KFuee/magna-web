@@ -1,7 +1,7 @@
 import { CreateInventoryDialog } from "@/components/inventories/create-dialog";
 import { InventoriesTable } from "@/components/inventories/table";
 import { Button } from "@/components/ui/button";
-import supabaseServer from "@/lib/supabaseServer";
+import { supabaseServer } from "@/lib/supabaseServer";
 import { ImportIcon } from "lucide-react";
 
 export default async function InventoriesPage() {
@@ -10,8 +10,7 @@ export default async function InventoriesPage() {
   const { data, error } = await supabase.from("Inventories").select("*");
 
   if (error) {
-    console.error(error);
-    return <div>Error</div>;
+    throw error;
   }
 
   return (
