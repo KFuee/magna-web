@@ -16,7 +16,7 @@ export default async function MainNav() {
     <div className="flex h-16 items-center px-6 border-b">
       <div className="flex items-center text-lg font-medium">
         <Image
-          src="/logo.svg"
+          src="/assets/logo.svg"
           alt="Magna Logo"
           className="dark:invert me-4"
           width={100}

@@ -16,9 +16,9 @@ export default function SignInPage() {
           <div className="absolute inset-0 bg-zinc-900" />
           <div className="relative z-20 flex items-center text-lg font-medium">
             <Image
-              src="/logo.svg"
+              src="/assets/logo.svg"
               alt="Magna Logo"
-              className="invert"
+              className="invert text-white"
               width={100}
               height={24}
               priority
