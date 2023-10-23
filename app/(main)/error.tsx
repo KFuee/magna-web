@@ -19,7 +19,7 @@ export default function Error({
   return (
     <div className="flex flex-1 flex-col items-center justify-center h-full">
       <div className="max-w-[400px] space-y-6 text-center">
-        <h2 className="text-3xl font-bold tracking-tight">{error.message}</h2>
+        <h2 className="text-3xl font-bold tracking-tight">Error desconocido</h2>
 
         <p className="text-gray-500">
           En caso de que el error persista, por favor contacte al administrador
