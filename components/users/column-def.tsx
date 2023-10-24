@@ -10,7 +10,9 @@ const customDef: ColumnDef<User>[] = [
     header: "Estado",
     cell: ({ row }) => (
       <Badge variant={row.getValue("confirmed_at") ? "outline" : "destructive"}>
-        {row.getValue("confirmed_at") ? "Confirmado" : "Sin confirmar"}
+        <span className="whitespace-nowrap">
+          {row.getValue("confirmed_at") ? "Confirmado" : "Sin confirmar"}
+        </span>
       </Badge>
     ),
     enableColumnFilter: false,

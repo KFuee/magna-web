@@ -12,11 +12,6 @@ import {
 
 const customDef: ColumnDef<Tables<"Inventories">>[] = [
   {
-    accessorKey: "name",
-    header: "Nombre",
-    cell: ({ row }) => <div>{row.getValue("name")}</div>,
-  },
-  {
     accessorKey: "closed_at",
     header: "Estado",
     cell: ({ row }) => (
@@ -26,20 +21,29 @@ const customDef: ColumnDef<Tables<"Inventories">>[] = [
             <Tooltip>
               <TooltipTrigger>
                 {" "}
-                <Badge variant="destructive">Cerrado</Badge>
+                <Badge variant="destructive">
+                  <span className="whitespace-nowrap">Cerrado</span>
+                </Badge>
               </TooltipTrigger>
               <TooltipContent>
-                <span>
+                <span className="whitespace-nowrap">
                   Cerrado el {getDateString(row.getValue("closed_at"))}
                 </span>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
         ) : (
-          <Badge variant="outline">Abierto</Badge>
+          <Badge variant="outline">
+            <span className="whitespace-nowrap">Abierto</span>
+          </Badge>
         )}
       </div>
     ),
+  },
+  {
+    accessorKey: "name",
+    header: "Nombre",
+    cell: ({ row }) => <div>{row.getValue("name")}</div>,
   },
 ];
 
