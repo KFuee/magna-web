@@ -132,11 +132,13 @@ export default function DataTable<T>({
             </AlertDialogTrigger>
 
             <DeleteConfirmationDialog
-              onAccept={() =>
+              onAccept={() => {
                 table.options.meta?.deleteSelectedRows(
                   table.getFilteredSelectedRowModel().flatRows
-                )
-              }
+                );
+
+                table.resetRowSelection();
+              }}
               onCancel={() => setIsDeleteSelectedRowsDialogOpen(false)}
             />
           </AlertDialog>
