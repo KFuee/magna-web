@@ -9,12 +9,15 @@ import {
   CommandItem,
 } from "@/components/ui/command";
 import {
+  Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog";
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import {
   Form,
   FormControl,
@@ -148,286 +151,300 @@ export function UpdateInventoryDialog({
   }, [supabase]);
 
   return (
-    <DialogContent className="sm:max-w-[425px]">
-      <DialogHeader>
-        <DialogTitle>Actualizar elemento de inventario</DialogTitle>
-        <DialogDescription>
-          Formulario actualización de elemento de inventario.
-        </DialogDescription>
-      </DialogHeader>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="flex flex-col gap-y-4">
-            <FormField
-              control={form.control}
-              name="barcode"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="Código de barras"
-                      type="text"
-                      disabled={isLoading}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+    <Dialog>
+      <DialogTrigger asChild>
+        <DropdownMenuItem
+          onSelect={(e) => e.preventDefault()}
+          className="w-full cursor-pointer"
+        >
+          <span>Actualizar</span>
+        </DropdownMenuItem>
+      </DialogTrigger>
 
-            <FormField
-              control={form.control}
-              name="quantity"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="Cantidad"
-                      type="number"
-                      min={0}
-                      disabled={isLoading}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Actualizar elemento de inventario</DialogTitle>
+          <DialogDescription>
+            Formulario actualización de elemento de inventario.
+          </DialogDescription>
+        </DialogHeader>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="flex flex-col gap-y-4">
+              <FormField
+                control={form.control}
+                name="barcode"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="Código de barras"
+                        type="text"
+                        disabled={isLoading}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="inventory_id"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant="outline"
-                          role="combobox"
-                          className={cn(
-                            "justify-between",
-                            !field.value && "text-muted-foreground"
-                          )}
-                        >
-                          {field.value
-                            ? inventories.find(
-                                (inventory) => inventory.value === field.value
-                              )?.label
-                            : "Inventario"}
-                          <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="p-0">
-                      <Command>
-                        <CommandInput
-                          placeholder="Buscar inventario..."
-                          className="h-9"
-                        />
-                        <CommandEmpty>
-                          No se encontraron resultados.
-                        </CommandEmpty>
-                        <CommandGroup>
-                          {inventories.map((inventory) => (
-                            <CommandItem
-                              value={inventory.label}
-                              key={inventory.value}
-                              onSelect={() => {
-                                form.setValue("inventory_id", inventory.value);
-                              }}
-                            >
-                              {inventory.label}
-                              <CheckIcon
-                                className={cn(
-                                  "ml-auto h-4 w-4",
-                                  inventory.value === field.value
-                                    ? "opacity-100"
-                                    : "opacity-0"
-                                )}
-                              />
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      </Command>
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="quantity"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="Cantidad"
+                        type="number"
+                        min={0}
+                        disabled={isLoading}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="product_id"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant="outline"
-                          role="combobox"
-                          className={cn(
-                            "justify-between",
-                            !field.value && "text-muted-foreground"
-                          )}
-                        >
-                          {field.value
-                            ? products.find(
-                                (product) => product.value === field.value
-                              )?.label
-                            : "Producto"}
-                          <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="p-0">
-                      <Command>
-                        <CommandInput
-                          placeholder="Buscar producto..."
-                          className="h-9"
-                        />
-                        <CommandEmpty>
-                          No se encontraron resultados.
-                        </CommandEmpty>
-                        <CommandGroup>
-                          {products.map((product) => (
-                            <CommandItem
-                              value={product.label}
-                              key={product.value}
-                              onSelect={() => {
-                                form.setValue("product_id", product.value);
-                              }}
-                            >
-                              {product.label}
-                              <CheckIcon
-                                className={cn(
-                                  "ml-auto h-4 w-4",
-                                  product.value === field.value
-                                    ? "opacity-100"
-                                    : "opacity-0"
-                                )}
-                              />
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      </Command>
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="inventory_id"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant="outline"
+                            role="combobox"
+                            className={cn(
+                              "justify-between",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value
+                              ? inventories.find(
+                                  (inventory) => inventory.value === field.value
+                                )?.label
+                              : "Inventario"}
+                            <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="p-0">
+                        <Command>
+                          <CommandInput
+                            placeholder="Buscar inventario..."
+                            className="h-9"
+                          />
+                          <CommandEmpty>
+                            No se encontraron resultados.
+                          </CommandEmpty>
+                          <CommandGroup>
+                            {inventories.map((inventory) => (
+                              <CommandItem
+                                value={inventory.label}
+                                key={inventory.value}
+                                onSelect={() => {
+                                  form.setValue(
+                                    "inventory_id",
+                                    inventory.value
+                                  );
+                                }}
+                              >
+                                {inventory.label}
+                                <CheckIcon
+                                  className={cn(
+                                    "ml-auto h-4 w-4",
+                                    inventory.value === field.value
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="location_id"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant="outline"
-                          role="combobox"
-                          className={cn(
-                            "justify-between",
-                            !field.value && "text-muted-foreground"
-                          )}
-                        >
-                          {field.value
-                            ? locations.find(
-                                (location) => location.value === field.value
-                              )?.label
-                            : "Ubicación"}
-                          <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="p-0">
-                      <Command>
-                        <CommandInput
-                          placeholder="Buscar ubicación..."
-                          className="h-9"
-                        />
-                        <CommandEmpty>
-                          No se encontraron resultados.
-                        </CommandEmpty>
-                        <CommandGroup>
-                          {locations.map((location) => (
-                            <CommandItem
-                              value={location.label}
-                              key={location.value}
-                              onSelect={() => {
-                                form.setValue("location_id", location.value);
-                              }}
-                            >
-                              {location.label}
-                              <CheckIcon
-                                className={cn(
-                                  "ml-auto h-4 w-4",
-                                  location.value === field.value
-                                    ? "opacity-100"
-                                    : "opacity-0"
-                                )}
-                              />
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      </Command>
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="product_id"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant="outline"
+                            role="combobox"
+                            className={cn(
+                              "justify-between",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value
+                              ? products.find(
+                                  (product) => product.value === field.value
+                                )?.label
+                              : "Producto"}
+                            <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="p-0">
+                        <Command>
+                          <CommandInput
+                            placeholder="Buscar producto..."
+                            className="h-9"
+                          />
+                          <CommandEmpty>
+                            No se encontraron resultados.
+                          </CommandEmpty>
+                          <CommandGroup>
+                            {products.map((product) => (
+                              <CommandItem
+                                value={product.label}
+                                key={product.value}
+                                onSelect={() => {
+                                  form.setValue("product_id", product.value);
+                                }}
+                              >
+                                {product.label}
+                                <CheckIcon
+                                  className={cn(
+                                    "ml-auto h-4 w-4",
+                                    product.value === field.value
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="observations"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormControl>
-                    <Textarea
-                      {...field}
-                      placeholder="Observaciones"
-                      disabled={isLoading}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="location_id"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant="outline"
+                            role="combobox"
+                            className={cn(
+                              "justify-between",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value
+                              ? locations.find(
+                                  (location) => location.value === field.value
+                                )?.label
+                              : "Ubicación"}
+                            <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="p-0">
+                        <Command>
+                          <CommandInput
+                            placeholder="Buscar ubicación..."
+                            className="h-9"
+                          />
+                          <CommandEmpty>
+                            No se encontraron resultados.
+                          </CommandEmpty>
+                          <CommandGroup>
+                            {locations.map((location) => (
+                              <CommandItem
+                                value={location.label}
+                                key={location.value}
+                                onSelect={() => {
+                                  form.setValue("location_id", location.value);
+                                }}
+                              >
+                                {location.label}
+                                <CheckIcon
+                                  className={cn(
+                                    "ml-auto h-4 w-4",
+                                    location.value === field.value
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <DialogFooter className="gap-y-2">
-              <Button
-                variant="secondary"
-                onClick={(event) => {
-                  event.preventDefault();
-                  setUpdateOpened(false);
-                  form.reset();
-                }}
-                disabled={isLoading}
-              >
-                Cancelar
-              </Button>
-              <Button
-                variant="default"
-                onClick={form.handleSubmit(onSubmit)}
-                disabled={isLoading}
-              >
-                <span>
-                  {isLoading
-                    ? "Actualizando elemento..."
-                    : "Actualizar elemento"}
-                </span>
-              </Button>
-            </DialogFooter>
-          </div>
-        </form>
-      </Form>
-    </DialogContent>
+              <FormField
+                control={form.control}
+                name="observations"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormControl>
+                      <Textarea
+                        {...field}
+                        placeholder="Observaciones"
+                        disabled={isLoading}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <DialogFooter className="gap-y-2">
+                <Button
+                  variant="secondary"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    setUpdateOpened(false);
+                    form.reset();
+                  }}
+                  disabled={isLoading}
+                >
+                  Cancelar
+                </Button>
+                <Button
+                  variant="default"
+                  onClick={form.handleSubmit(onSubmit)}
+                  disabled={isLoading}
+                >
+                  <span>
+                    {isLoading
+                      ? "Actualizando elemento..."
+                      : "Actualizar elemento"}
+                  </span>
+                </Button>
+              </DialogFooter>
+            </div>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
   );
 }
