@@ -16,6 +16,7 @@ export async function sendOperatorInvitation(
       sap_code: values.sap_code,
       position: values.position,
       organizational_unit: values.organizational_unit,
+      role: "operator",
     },
   });
 
@@ -34,6 +35,7 @@ export async function sendAdministratorInvitation(
   const { error } = await supabase.auth.admin.inviteUserByEmail(values.email, {
     data: {
       fullname: values.fullname,
+      role: "administrator",
     },
   });
 

@@ -23,9 +23,16 @@ const customDef: ColumnDef<User>[] = [
     cell: ({ row }) => <span>{row.getValue("email")}</span>,
   },
   {
+    accessorFn: (row) => row.user_metadata?.role,
     accessorKey: "role",
     header: "Rol",
-    cell: ({ row }) => <div>{row.getValue("role")}</div>,
+    cell: ({ row }) => (
+      <div>
+        {row.getValue("role") === "administrator"
+          ? "Administrador"
+          : "Operador"}
+      </div>
+    ),
   },
   {
     accessorKey: "last_sign_in_at",

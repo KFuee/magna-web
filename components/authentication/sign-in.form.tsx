@@ -48,10 +48,18 @@ export function SignInForm({ className, ...props }: SignInFormProps) {
     setIsLoading(true);
     setError(null);
 
-    const { error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email: values.email,
       password: values.password,
     });
+
+    if (data.user?.user_metadata.role !== "administrator") {
+      setError("No tienes permisos para acceder a esta aplicación");
+      await supabase.auth.signOut();
+
+      setIsLoading(false);
+      return;
+    }
 
     if (error) {
       setError(error.message);
