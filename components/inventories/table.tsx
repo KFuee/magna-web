@@ -3,13 +3,11 @@
 import { Tables } from "@/lib/types/database-custom";
 import DataTable from "@/components/table/data-table";
 import { inventoriesColumnDef } from "./column-def";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { Database } from "@/lib/types/database";
-import { useRouter } from "next/navigation";
-import { useTableDefinition } from "@/lib/table/use-table-definition";
+import { useTableDefinition } from "@/lib/hooks/use-table-definition";
 import { UpdateInventoryDialog } from "./update-dialog";
 import InventoriesAditionalActions from "./aditional-actions";
 import { PostgrestError } from "@supabase/supabase-js";
+import useDeleteRecords from "@/lib/hooks/use-delete-records";
 
 export function InventoriesTable({
   data,
@@ -18,34 +16,31 @@ export function InventoriesTable({
   data: Tables<"Inventories">[] | null;
   error: PostgrestError | null;
 }) {
-  const router = useRouter();
-  const supabase = createClientComponentClient<Database>();
+  const deleteRecords = useDeleteRecords("Inventories");
 
-  const { table, rowSelection, globalFilter, setGlobalFilter } =
-    useTableDefinition<Tables<"Inventories">>({
-      data,
-      columns: inventoriesColumnDef,
-      meta: {
-        aditionalActions: (row) => <InventoriesAditionalActions row={row} />,
-        updateComponent: (row, setUpdateOpened) => (
-          <UpdateInventoryDialog
-            current={row.original}
-            setUpdateOpened={setUpdateOpened}
-          />
-        ),
-        deleteRow: async (row) => {
-          await supabase.from("Inventories").delete().eq("id", row.original.id);
-
-          router.refresh();
-        },
-      },
-      error,
-    });
+  const { table, globalFilter, setGlobalFilter } = useTableDefinition<
+    Tables<"Inventories">
+  >({
+    data,
+    columns: inventoriesColumnDef,
+    meta: {
+      aditionalActions: (row) => <InventoriesAditionalActions row={row} />,
+      updateComponent: (row, setUpdateOpened) => (
+        <UpdateInventoryDialog
+          current={row.original}
+          setUpdateOpened={setUpdateOpened}
+        />
+      ),
+      deleteRow: (row) => deleteRecords([row.original.id]),
+      deleteSelectedRows: (rows) =>
+        deleteRecords(rows.map((row) => row.original.id)),
+    },
+    error,
+  });
 
   return (
     <DataTable
       table={table}
-      rowSelection={rowSelection}
       globalFilter={globalFilter}
       setGlobalFilter={setGlobalFilter}
     />

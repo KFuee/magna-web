@@ -49,6 +49,7 @@ export function useTableDefinition<TData>(options: TableOptions<TData>) {
       rowSelection,
       globalFilter,
     },
+    enableRowSelection: true,
     globalFilterFn: options.globalFilterFn || fuzzyFilter,
     meta: options.meta,
   });

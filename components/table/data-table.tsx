@@ -8,11 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import {
-  RowSelectionState,
-  Table as TanStackTable,
-  flexRender,
-} from "@tanstack/react-table";
+import { Table as TanStackTable, flexRender } from "@tanstack/react-table";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -21,23 +17,26 @@ import {
 } from "../ui/dropdown-menu";
 import { ChevronDownIcon, TrashIcon } from "lucide-react";
 import { Button } from "../ui/button";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { AlertDialog, AlertDialogTrigger } from "../ui/alert-dialog";
+import { DeleteConfirmationDialog } from "../delete-confirmation-dialog";
 
 export default function DataTable<T>({
   table,
-  rowSelection,
   globalFilter,
   setGlobalFilter,
 }: {
   table: TanStackTable<T>;
-  rowSelection: RowSelectionState;
   globalFilter: string;
   setGlobalFilter: (value: string) => void;
 }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  const [isDeleteSelectedRowsDialogOpen, setIsDeleteSelectedRowsDialogOpen] =
+    useState(false);
 
   // Obtiene una nueva cadena de búsqueda combinando la actual
   // searchParams con un par clave/valor proporcionado
@@ -117,14 +116,30 @@ export default function DataTable<T>({
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <Button
-            variant="destructive"
-            className="ml-auto"
-            disabled={!rowSelection.rows}
+          <AlertDialog
+            open={isDeleteSelectedRowsDialogOpen}
+            onOpenChange={setIsDeleteSelectedRowsDialogOpen}
           >
-            <TrashIcon className="w-5 h-5 mr-2" />
-            <span>Eliminar selección</span>
-          </Button>
+            <AlertDialogTrigger asChild>
+              <Button
+                variant="destructive"
+                className="ml-auto"
+                disabled={!table.getFilteredSelectedRowModel().rows.length}
+              >
+                <TrashIcon className="w-5 h-5 mr-2" />
+                <span>Eliminar selección</span>
+              </Button>
+            </AlertDialogTrigger>
+
+            <DeleteConfirmationDialog
+              onAccept={() =>
+                table.options.meta?.deleteSelectedRows(
+                  table.getFilteredSelectedRowModel().flatRows
+                )
+              }
+              onCancel={() => setIsDeleteSelectedRowsDialogOpen(false)}
+            />
+          </AlertDialog>
         </div>
       </div>
       <div className="rounded-md border">

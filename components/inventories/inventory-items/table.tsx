@@ -2,13 +2,11 @@
 
 import DataTable from "@/components/table/data-table";
 import { inventoryItemsColumnDef } from "./column-def";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { Database } from "@/lib/types/database";
-import { useRouter } from "next/navigation";
-import { useTableDefinition } from "@/lib/table/use-table-definition";
+import { useTableDefinition } from "@/lib/hooks/use-table-definition";
 import { UpdateInventoryDialog } from "./update-dialog";
 import { InventoryItem } from "@/lib/types/inventory-item";
 import { PostgrestError } from "@supabase/supabase-js";
+import useDeleteRecords from "@/lib/hooks/use-delete-records";
 
 export function InventoryItemsTable({
   data,
@@ -17,12 +15,12 @@ export function InventoryItemsTable({
   data?: InventoryItem[] | null;
   error: PostgrestError | null;
 }) {
-  const router = useRouter();
-  const supabase = createClientComponentClient<Database>();
+  const deleteRecords = useDeleteRecords("InventoryItems");
 
-  const { table, rowSelection, globalFilter, setGlobalFilter } =
+  const { table, globalFilter, setGlobalFilter } =
     useTableDefinition<InventoryItem>({
       data,
+      error,
       columns: inventoryItemsColumnDef,
       meta: {
         updateComponent: (row, setUpdateOpened) => (
@@ -31,22 +29,15 @@ export function InventoryItemsTable({
             setUpdateOpened={setUpdateOpened}
           />
         ),
-        deleteRow: async (row) => {
-          await supabase
-            .from("InventoryItems")
-            .delete()
-            .eq("id", row.original.id);
-
-          router.refresh();
-        },
+        deleteRow: (row) => deleteRecords([row.original.id]),
+        deleteSelectedRows: (rows) =>
+          deleteRecords(rows.map((row) => row.original.id)),
       },
-      error,
     });
 
   return (
     <DataTable
       table={table}
-      rowSelection={rowSelection}
       globalFilter={globalFilter}
       setGlobalFilter={setGlobalFilter}
     />

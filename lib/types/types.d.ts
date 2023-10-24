@@ -8,5 +8,6 @@ declare module "@tanstack/table-core" {
       setUpdateOpened: (value: boolean) => void
     ) => void;
     deleteRow: (row: Row<TData>) => void;
+    deleteSelectedRows: (rows: Row<TData>[]) => void;
   }
 }

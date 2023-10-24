@@ -57,3 +57,9 @@ export async function deleteUser(id: string) {
 
   throw error;
 }
+
+export async function deleteUsers(ids: string[]) {
+  ids.forEach(async (id) => {
+    await deleteUser(id);
+  });
+}
