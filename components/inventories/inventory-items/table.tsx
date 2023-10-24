@@ -8,8 +8,15 @@ import { useRouter } from "next/navigation";
 import { useTableDefinition } from "@/lib/table/use-table-definition";
 import { UpdateInventoryDialog } from "./update-dialog";
 import { InventoryItem } from "@/lib/types/inventory-item";
+import { PostgrestError } from "@supabase/supabase-js";
 
-export function InventoryItemsTable({ data }: { data: InventoryItem[] }) {
+export function InventoryItemsTable({
+  data,
+  error,
+}: {
+  data?: InventoryItem[] | null;
+  error: PostgrestError | null;
+}) {
   const router = useRouter();
   const supabase = createClientComponentClient<Database>();
 
@@ -33,6 +40,7 @@ export function InventoryItemsTable({ data }: { data: InventoryItem[] }) {
           router.refresh();
         },
       },
+      error,
     });
 
   return (

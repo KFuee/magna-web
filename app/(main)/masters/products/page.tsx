@@ -9,10 +9,6 @@ export default async function ProductsPage() {
 
   const { data, error } = await supabase.from("Products").select("*");
 
-  if (error) {
-    throw error;
-  }
-
   return (
     <div className="flex flex-1 flex-col p-6 min-h-full space-y-4">
       <div className="flex items-center justify-between flex-wrap gap-4 min-h-[40px]">
@@ -28,7 +24,7 @@ export default async function ProductsPage() {
       </div>
 
       <div className="flex flex-1">
-        <ProductsTable data={data} />
+        <ProductsTable data={data} error={error} />
       </div>
     </div>
   );

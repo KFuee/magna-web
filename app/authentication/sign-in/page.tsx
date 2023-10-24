@@ -1,12 +1,5 @@
-import { Metadata } from "next";
 import Image from "next/image";
-
 import { SignInForm } from "@/components/authentication/sign-in.form";
-
-export const metadata: Metadata = {
-  title: "Inicio de sesión",
-  description: "Iniciar sesión en tu cuenta",
-};
 
 export default function SignInPage() {
   return (

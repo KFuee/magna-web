@@ -20,11 +20,13 @@ export const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   return itemRank.passed;
 };
 
-export const getDateString = (date: Date) => {
+export const getDateString = (date: Date, withTime = false) => {
   if (!date || date === null) return "-";
   return new Date(date).toLocaleDateString("es-ES", {
     year: "numeric",
     month: "long",
     day: "numeric",
+    hour: withTime ? "numeric" : undefined,
+    minute: withTime ? "numeric" : undefined,
   });
 };

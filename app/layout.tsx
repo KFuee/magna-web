@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
+import { Toaster } from "@/components/ui/toaster";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -12,8 +13,9 @@ export const fontSans = FontSans({
 });
 
 export const metadata: Metadata = {
-  title: "Magna",
-  description: "Aplicación para realización de inventarios de stock",
+  title: "Magna inventory",
+  description: "Aplicación para la administración de inventarios de Magna",
+  viewport: "width=device-width, initial-scale=1",
 };
 
 export default function RootLayout({
@@ -22,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="es" suppressHydrationWarning>
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
@@ -36,6 +38,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

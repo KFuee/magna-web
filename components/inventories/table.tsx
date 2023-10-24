@@ -9,8 +9,15 @@ import { useRouter } from "next/navigation";
 import { useTableDefinition } from "@/lib/table/use-table-definition";
 import { UpdateInventoryDialog } from "./update-dialog";
 import InventoriesAditionalActions from "./aditional-actions";
+import { PostgrestError } from "@supabase/supabase-js";
 
-export function InventoriesTable({ data }: { data: Tables<"Inventories">[] }) {
+export function InventoriesTable({
+  data,
+  error,
+}: {
+  data: Tables<"Inventories">[] | null;
+  error: PostgrestError | null;
+}) {
   const router = useRouter();
   const supabase = createClientComponentClient<Database>();
 
@@ -32,6 +39,7 @@ export function InventoriesTable({ data }: { data: Tables<"Inventories">[] }) {
           router.refresh();
         },
       },
+      error,
     });
 
   return (

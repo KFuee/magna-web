@@ -8,8 +8,15 @@ import { Database } from "@/lib/types/database";
 import { useRouter } from "next/navigation";
 import { useTableDefinition } from "@/lib/table/use-table-definition";
 import { UpdateLocationDialog } from "./update-dialog";
+import { PostgrestError } from "@supabase/supabase-js";
 
-export function LocationsTable({ data }: { data: Tables<"Locations">[] }) {
+export function LocationsTable({
+  data,
+  error,
+}: {
+  data: Tables<"Locations">[] | null;
+  error: PostgrestError | null;
+}) {
   const router = useRouter();
   const supabase = createClientComponentClient<Database>();
 
@@ -30,6 +37,7 @@ export function LocationsTable({ data }: { data: Tables<"Locations">[] }) {
           router.refresh();
         },
       },
+      error,
     });
 
   return (

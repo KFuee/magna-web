@@ -1,13 +1,5 @@
-import { Metadata } from "next";
 import Image from "next/image";
-
-import { SignInForm } from "@/components/authentication/sign-in.form";
 import { FirstTimeForm } from "@/components/authentication/first-time.form";
-
-export const metadata: Metadata = {
-  title: "Cambio de contraseña",
-  description: "Página de cambio de contraseña",
-};
 
 export default function FirstTimePage() {
   return (

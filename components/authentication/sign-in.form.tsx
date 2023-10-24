@@ -18,6 +18,7 @@ import {
   FormItem,
   FormMessage,
 } from "../ui/form";
+import { useToast } from "../ui/use-toast";
 
 const formSchema = z.object({
   email: z
@@ -33,8 +34,9 @@ export function SignInForm({ className, ...props }: SignInFormProps) {
   const router = useRouter();
   const supabase = createClientComponentClient<Database>();
 
+  const { toast } = useToast();
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -46,15 +48,20 @@ export function SignInForm({ className, ...props }: SignInFormProps) {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    setError(null);
 
     const { data, error } = await supabase.auth.signInWithPassword({
       email: values.email,
       password: values.password,
     });
 
-    if (data.user?.user_metadata.role !== "administrator") {
-      setError("No tienes permisos para acceder a esta aplicación");
+    if (!error && data.user?.user_metadata.role !== "administrator") {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "No tienes permisos para acceder a esta aplicación",
+        duration: 5000,
+      });
+
       await supabase.auth.signOut();
 
       setIsLoading(false);
@@ -62,7 +69,14 @@ export function SignInForm({ className, ...props }: SignInFormProps) {
     }
 
     if (error) {
-      setError(error.message);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: error.message,
+      });
+
+      setIsLoading(false);
+
       return;
     }
 
@@ -123,8 +137,6 @@ export function SignInForm({ className, ...props }: SignInFormProps) {
                 <span>Iniciar sesión con email</span>
               )}
             </Button>
-
-            {error && <p className="text-red-500 text-center">{error}</p>}
           </div>
         </form>
       </Form>

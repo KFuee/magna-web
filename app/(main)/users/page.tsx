@@ -7,10 +7,6 @@ export default async function UsersPage() {
 
   const { data, error } = await supabase.auth.admin.listUsers();
 
-  if (error) {
-    throw error;
-  }
-
   return (
     <div className="flex flex-1 flex-col p-6 min-h-full space-y-4">
       <div className="flex items-center justify-between flex-wrap gap-4 min-h-[40px]">
@@ -21,7 +17,7 @@ export default async function UsersPage() {
       </div>
 
       <div className="flex flex-1">
-        <UsersTable data={data.users} />
+        <UsersTable data={data.users} error={error} />
       </div>
     </div>
   );

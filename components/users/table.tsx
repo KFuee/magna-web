@@ -2,20 +2,22 @@
 
 import DataTable from "@/components/table/data-table";
 import { usersColumnDef } from "./column-def";
-import {
-  User,
-  createClientComponentClient,
-} from "@supabase/auth-helpers-nextjs";
-import { Database } from "@/lib/types/database";
+import { User } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import { useTableDefinition } from "@/lib/table/use-table-definition";
 import { UpdateUserDialog } from "./update-dialog";
 import { useTransition } from "react";
 import { deleteUser } from "@/lib/actions";
+import { AuthError, PostgrestError } from "@supabase/supabase-js";
 
-export function UsersTable({ data }: { data: User[] }) {
+export function UsersTable({
+  data,
+  error,
+}: {
+  data: User[] | null;
+  error: AuthError | null;
+}) {
   const router = useRouter();
-  const supabase = createClientComponentClient<Database>();
 
   const [_isDeleting, startTransition] = useTransition();
 
@@ -38,6 +40,7 @@ export function UsersTable({ data }: { data: User[] }) {
           router.refresh();
         },
       },
+      error,
     });
 
   return (

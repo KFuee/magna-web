@@ -23,10 +23,6 @@ export default async function InventoryItemsPage({
     .eq("id", params.id)
     .single();
 
-  if (error) {
-    throw error;
-  }
-
   return (
     <div className="flex flex-1 flex-col p-6 min-h-full space-y-4">
       <div className="flex items-center justify-between flex-wrap gap-4 min-h-[40px]">
@@ -36,7 +32,7 @@ export default async function InventoryItemsPage({
       </div>
 
       <div className="flex flex-1">
-        <InventoryItemsTable data={data?.InventoryItems} />
+        <InventoryItemsTable data={data?.InventoryItems} error={error} />
       </div>
     </div>
   );

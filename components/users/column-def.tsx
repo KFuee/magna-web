@@ -45,7 +45,7 @@ const customDef: ColumnDef<User>[] = [
     },
     cell: ({ row }) => (
       <div className="flex items-center capitalize whitespace-nowrap">
-        {getDateString(row.getValue("last_sign_in_at"))}
+        {getDateString(row.getValue("last_sign_in_at"), true)}
       </div>
     ),
     enableColumnFilter: false,
