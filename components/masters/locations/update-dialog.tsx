@@ -10,6 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import {
   Form,
   FormControl,
@@ -21,7 +22,6 @@ import { Input } from "@/components/ui/input";
 import { Database } from "@/lib/types/database";
 import { Tables } from "@/lib/types/database-custom";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
