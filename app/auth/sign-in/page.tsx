@@ -13,13 +13,19 @@ export default function SignInPage() {
 
   useEffect(() => {
     const message = searchParams.get("message");
-    if (message) {
-      toast({
-        description: message,
-        variant: "default",
-        duration: 1000000,
-      });
+    if (!message) {
+      return;
     }
+
+    const { dismiss } = toast({
+      description: message,
+      variant: "default",
+      duration: 1000000,
+    });
+
+    return () => {
+      dismiss();
+    };
   }, [searchParams, toast]);
 
   return (
@@ -33,7 +39,7 @@ export default function SignInPage() {
               alt="Magna Logo"
               className="invert text-white"
               width={100}
-              height={24}
+              height={23.51}
               priority
             />
           </div>

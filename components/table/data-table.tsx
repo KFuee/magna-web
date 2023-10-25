@@ -86,6 +86,9 @@ export default function DataTable<T>({
           value={globalFilter ?? ""}
           onChange={(event) => handleFilterChange(event)}
           className="lg:max-w-lg w-full"
+          autoCorrect="off"
+          autoComplete="off"
+          autoCapitalize="off"
         />
 
         <div className="flex flex-1 flex-row items-center space-x-2 ml-auto">

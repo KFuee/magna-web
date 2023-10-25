@@ -20,7 +20,7 @@ export default async function MainNav() {
           alt="Magna Logo"
           className="dark:invert"
           width={100}
-          height={24}
+          height={23.51}
           priority
         />
 

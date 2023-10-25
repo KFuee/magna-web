@@ -63,6 +63,9 @@ export default function UpdateGeneralForm({ user }: { user: User | null }) {
         variant: "destructive",
         duration: 5000,
       });
+      setIsLoading(false);
+
+      return;
     }
 
     if (user?.email !== values.email) {

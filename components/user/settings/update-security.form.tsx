@@ -9,6 +9,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
 import { Database } from "@/lib/types/database";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -39,8 +40,9 @@ export default function UpdateSecurityForm() {
   const router = useRouter();
   const supabase = createClientComponentClient<Database>();
 
+  const { toast } = useToast();
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -52,19 +54,29 @@ export default function UpdateSecurityForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    setError(null);
 
     const { error } = await supabase.auth.updateUser({
       password: values.password,
     });
 
     if (error) {
-      setError(error.message);
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+        duration: 5000,
+      });
+      setIsLoading(false);
+
       return;
     }
 
     setIsLoading(false);
-    router.push("/");
+
+    await supabase.auth.signOut();
+    router.push(
+      "/auth/sign-in?message=Su contraseña ha sido actualizada. Por favor, inicie sesión de nuevo."
+    );
   }
 
   return (
@@ -128,8 +140,6 @@ export default function UpdateSecurityForm() {
                 </span>
               </Button>
             </div>
-
-            {error && <p className="text-red-500 text-center">{error}</p>}
           </div>
         </form>
       </Form>

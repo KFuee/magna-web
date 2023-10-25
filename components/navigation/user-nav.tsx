@@ -57,7 +57,7 @@ export function UserNav({ user }: { user: User | null }) {
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           <Link href="/user/settings/general" className="w-full">
-            <span>Ajustes</span>
+            <span>Configuración</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer">

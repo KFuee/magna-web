@@ -13,7 +13,7 @@ export default function FirstTimePage() {
               alt="Magna Logo"
               className="invert text-white"
               width={100}
-              height={24}
+              height={23.51}
               priority
             />
           </div>
