@@ -5,9 +5,9 @@ import { supabaseServer } from "@/lib/supabaseServer";
 export default async function GeneralSettingsPage() {
   const supabase = supabaseServer();
 
-  const { data } = await supabase.auth.getUser();
-
-  if (!data.user) return null;
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   return (
     <div className="space-y-4">
@@ -19,7 +19,7 @@ export default async function GeneralSettingsPage() {
       </div>
 
       <Separator />
-      <UpdateGeneralForm user={data.user} />
+      <UpdateGeneralForm user={user} />
     </div>
   );
 }

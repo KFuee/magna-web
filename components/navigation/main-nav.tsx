@@ -9,10 +9,8 @@ export default async function MainNav() {
   const supabase = supabaseServer();
 
   const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  console.log(session);
+    data: { user },
+  } = await supabase.auth.getUser();
 
   return (
     <div className="flex h-16 items-center px-6 border-b">
@@ -31,11 +29,11 @@ export default async function MainNav() {
 
       <div className="ml-auto items-center space-x-4 hidden sm:flex">
         <ModeToggle />
-        <UserNav session={session} />
+        <UserNav user={user} />
       </div>
 
       <div className="ml-auto items-center space-x-4 flex sm:hidden">
-        <MobileNav session={session} />
+        <MobileNav user={user} />
       </div>
     </div>
   );

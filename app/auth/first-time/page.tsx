@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { FirstTimeForm } from "@/components/authentication/first-time.form";
+import { FirstTimeForm } from "@/components/auth/first-time.form";
 
 export default function FirstTimePage() {
   return (

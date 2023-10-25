@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 import { Menu } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
 import { UserNav } from "./user-nav";
-import { Session } from "@supabase/auth-helpers-nextjs";
+import { User } from "@supabase/auth-helpers-nextjs";
 import { Separator } from "../ui/separator";
 import { forwardRef } from "react";
 import Link from "next/link";
@@ -33,7 +33,7 @@ const components: { title: string; href: string }[] = [
   },
 ];
 
-export function MobileNav({ session }: { session: Session | null }) {
+export function MobileNav({ user }: { user: User | null }) {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -62,7 +62,7 @@ export function MobileNav({ session }: { session: Session | null }) {
               <div className="flex items-end w-full h-full">
                 <div className="flex items-center justify-between w-full">
                   <ModeToggle />
-                  <UserNav session={session} />
+                  <UserNav user={user} />
                 </div>
               </div>
             </div>

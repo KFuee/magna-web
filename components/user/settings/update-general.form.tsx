@@ -13,8 +13,11 @@ import { useToast } from "@/components/ui/use-toast";
 import { Database } from "@/lib/types/database";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { User } from "@supabase/supabase-js";
+import {
+  User,
+  createClientComponentClient,
+} from "@supabase/auth-helpers-nextjs";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -28,6 +31,7 @@ const formSchema = z.object({
 });
 
 export default function UpdateGeneralForm({ user }: { user: User | null }) {
+  const router = useRouter();
   const supabase = createClientComponentClient<Database>();
 
   const { toast } = useToast();
@@ -62,6 +66,7 @@ export default function UpdateGeneralForm({ user }: { user: User | null }) {
     }
 
     setIsLoading(false);
+    router.refresh();
   }
 
   useEffect(() => {
