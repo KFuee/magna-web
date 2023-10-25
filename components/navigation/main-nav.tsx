@@ -12,19 +12,21 @@ export default async function MainNav() {
     data: { session },
   } = await supabase.auth.getSession();
 
+  console.log(session);
+
   return (
     <div className="flex h-16 items-center px-6 border-b">
       <div className="flex items-center text-lg font-medium">
         <Image
           src="/assets/logo.svg"
           alt="Magna Logo"
-          className="dark:invert me-4"
+          className="dark:invert"
           width={100}
           height={24}
           priority
         />
 
-        <NavItems className="hidden sm:block" />
+        <NavItems className="hidden sm:block ms-4" />
       </div>
 
       <div className="ml-auto items-center space-x-4 hidden sm:flex">

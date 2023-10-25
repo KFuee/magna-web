@@ -10,15 +10,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Database } from "@/lib/types/database";
 import {
   Session,
   createClientComponentClient,
 } from "@supabase/auth-helpers-nextjs";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export function UserNav({ session }: { session: Session | null }) {
   const router = useRouter();
-  const supabase = createClientComponentClient();
+  const supabase = createClientComponentClient<Database>();
 
   async function handleSignOut() {
     await supabase.auth.signOut();
@@ -48,8 +50,13 @@ export function UserNav({ session }: { session: Session | null }) {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
+        <DropdownMenuItem>
+          <Link href="/user/settings/general" className="w-full">
+            <span>Ajustes</span>
+          </Link>
+        </DropdownMenuItem>
         <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer">
-          Cerrar sesión
+          <span>Cerrar sesión</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
