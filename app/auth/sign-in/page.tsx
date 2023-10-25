@@ -1,7 +1,27 @@
+"use client";
+
 import Image from "next/image";
 import { SignInForm } from "@/components/auth/sign-in.form";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function SignInPage() {
+  const searchParams = useSearchParams();
+
+  const { toast } = useToast();
+
+  useEffect(() => {
+    const message = searchParams.get("message");
+    if (message) {
+      toast({
+        description: message,
+        variant: "default",
+        duration: 1000000,
+      });
+    }
+  }, [searchParams, toast]);
+
   return (
     <>
       <div className="container relative h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">

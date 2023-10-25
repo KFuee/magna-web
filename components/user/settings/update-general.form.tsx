@@ -65,6 +65,13 @@ export default function UpdateGeneralForm({ user }: { user: User | null }) {
       });
     }
 
+    if (user?.email !== values.email) {
+      await supabase.auth.signOut();
+      router.push(
+        "/auth/sign-in?message=Revise su correo para confirmar el cambio de email y luego inicie sesión con el nuevo."
+      );
+    }
+
     setIsLoading(false);
     router.refresh();
   }
