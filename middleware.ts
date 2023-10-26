@@ -14,6 +14,15 @@ export async function middleware(req: NextRequest) {
 
   const { pathname } = req.nextUrl;
 
+  if (
+    session &&
+    !pathname.startsWith("/auth") &&
+    session.user.user_metadata.role !== "administrator"
+  ) {
+    await supabase.auth.signOut();
+    return NextResponse.redirect(new URL("/landing", req.url));
+  }
+
   if (!session && pathname !== "/auth/sign-in") {
     return NextResponse.redirect(new URL("/auth/sign-in", req.url));
   }

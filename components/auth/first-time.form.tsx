@@ -63,6 +63,7 @@ export function FirstTimeForm({ className, ...props }: FirstTimeFormProps) {
 
     if (error) {
       setError(error.message);
+      setIsLoading(false);
       return;
     }
 

@@ -59,7 +59,7 @@ export function SignInForm({ className, ...props }: SignInFormProps) {
       toast({
         variant: "destructive",
         title: "Error",
-        description: "No tienes permisos para acceder a esta aplicación.",
+        description: "No tiene permisos para acceder a esta aplicación.",
         duration: 5000,
       });
 
