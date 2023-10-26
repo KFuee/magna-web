@@ -1,6 +1,6 @@
 import { FirstTimeForm } from "@/components/auth/first-time.form";
 
-export default function FirstTimePage() {
+export default function ChangePasswordPage() {
   return (
     <>
       <div className="flex flex-col space-y-2 text-center">
@@ -9,8 +9,8 @@ export default function FirstTimePage() {
         </h1>
 
         <p className="text-sm text-muted-foreground">
-          Parece que es la primera vez que inicia sesión, por favor establezca
-          una contraseña para continuar
+          Introduzca su nueva contraseña a continuación para recuperar el acceso
+          a su cuenta
         </p>
       </div>
 

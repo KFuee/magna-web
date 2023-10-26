@@ -26,12 +26,14 @@ const formSchema = z.object({
     .string()
     .email("El email introducido no es válido")
     .min(1, "El email es requerido"),
-  password: z.string().min(1, "La contraseña es requerida"),
 });
 
-interface SignInFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface ForgotPasswordProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export function SignInForm({ className, ...props }: SignInFormProps) {
+export function ForgotPasswordForm({
+  className,
+  ...props
+}: ForgotPasswordProps) {
   const router = useRouter();
   const supabase = createClientComponentClient<Database>();
 
@@ -43,31 +45,13 @@ export function SignInForm({ className, ...props }: SignInFormProps) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
-      password: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: values.email,
-      password: values.password,
-    });
-
-    if (!error && data.user?.user_metadata.role !== "administrator") {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "No tienes permisos para acceder a esta aplicación.",
-        duration: 5000,
-      });
-
-      await supabase.auth.signOut();
-
-      setIsLoading(false);
-      return;
-    }
+    const { error } = await supabase.auth.resetPasswordForEmail(values.email);
 
     if (error) {
       toast({
@@ -82,7 +66,9 @@ export function SignInForm({ className, ...props }: SignInFormProps) {
     }
 
     setIsLoading(false);
-    router.push("/");
+    router.push(
+      "/auth/sign-in?message=Se ha enviado un email de recuperación, por favor revise su bandeja de entrada."
+    );
   }
 
   return (
@@ -111,37 +97,19 @@ export function SignInForm({ className, ...props }: SignInFormProps) {
               )}
             />
 
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="Contraseña"
-                      type="password"
-                      autoComplete="current-password"
-                      autoCorrect="off"
-                      disabled={isLoading}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="flex flex-row justify-between items-center whitespace-nowrap space-x-6">
+              <Button disabled={isLoading} className="flex-grow">
+                {isLoading ? (
+                  <span>Enviando...</span>
+                ) : (
+                  <span>Enviar email de recuperación</span>
+                )}
+              </Button>
 
-            <div className="flex justify-end text-sm text-primary hover:underline">
-              <Link href="/auth/forgot-password">¿Olvidó su contraseña?</Link>
+              <Button variant="link">
+                <Link href="/auth/sign-in">Volver</Link>
+              </Button>
             </div>
-
-            <Button disabled={isLoading}>
-              {isLoading ? (
-                <span>Iniciando sesión...</span>
-              ) : (
-                <span>Iniciar sesión con email</span>
-              )}
-            </Button>
           </div>
         </form>
       </Form>

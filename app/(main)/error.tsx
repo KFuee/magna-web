@@ -27,13 +27,14 @@ export default function Error({
           <span className="text-red-500">{error.digest}</span>
         </p>
 
-        <div className="flex flex-row items-center justify-center space-x-2">
+        <div className="flex flex-row justify-between items-center whitespace-nowrap space-x-6">
           <Button
             onClick={
               // Attempt to recover by trying to re-render the segment
               () => reset()
             }
             variant="outline"
+            className="flex-grow"
           >
             Volver a intentar
           </Button>

@@ -12,14 +12,14 @@ export default function AuthCodeErrorPage() {
         </h2>
 
         <p className="text-gray-500 text-center">
-          No se pudo completar el proceso de autenticación. Por favor, intenta
-          acceder al enlace de nuevo. En caso de persistir el error, contacta
+          No se pudo completar el proceso de autenticación. Por favor, intente
+          acceder al enlace de nuevo. En caso de persistir el error, contacte
           con el administrador para obtener una nueva invitación
         </p>
 
-        <div className="flex flex-row items-center justify-center">
+        <div className="flex flex-row items-center justify-end">
           <Button variant="link">
-            <Link href="/">Ir al inicio</Link>
+            <Link href="/auth/sign-in">Ir al inicio de sesión</Link>
           </Button>
         </div>
       </div>
